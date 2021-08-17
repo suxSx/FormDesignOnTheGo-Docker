@@ -1,6 +1,11 @@
 # Create Backend Docker file
 This project uses React as a Frontend and Springboot as a backend, with the help of postgresql. In order to create a docker file, we need to first setup the images needed. For then to create a docker file.
 
+## Two ways to go
+You have here two ways to go one is to create everything for learning purpose or use the prebuild docker-images located at docker hub.
+
+If you want to created everything follow the instructions below. If you just want to run it, download ``docker-compose.yml`` and run ``docker-compose up`` from the folder that contains the compose file. And it will download everything for you.
+
 ## Creating Images
 First build the JAR file for the backend. Use the command ``gradle bootBuildImage`` inside backend folder.
 
@@ -9,11 +14,11 @@ The jar file will be created in: ``/backend/build/libs/firstspringapp-0.0.1-SNAP
 ### Build Docker React and Spring Image
 Then we need a docker  for both frontend and backend. 
 
-Navigate into Frontend folder and run ``docker build -t formdesign-frontend .``
+Navigate into Frontend folder and run ``docker build -t knoph/formdesign-frontend:latest .``
 
-Navigate into Backend folder and run ``docker build -t formdesign-backend .``
+Navigate into Backend folder and run ``docker build -t knoph/formdesign-backend:latest .``
 
-You can test the image with the command: ``docker run -p 80:80 formdesign-frontend/backend``
+You can test the image with the command: ``docker run -p 80:80 knoph/formdesign-frontend:latest`` and ``docker run -p 8080:8080 knoph/formdesign-backend:latest``
 
 ### Build the postgresql image
 The backend uses postgresql, so we also need an image containing that one.
@@ -63,7 +68,7 @@ You can send them to another machine/user and they can load the images with:
 
 ``docker load -i ./postgres.tar``
 
-To run, use the docker-compose.yml file so remember to send that one to. 
+To run, use the docker-compose.ym
 
 # TROUBLE WITH STARTUP
 Tripple check that the username, and password are the same in the composer file as it is in your application file for spring. The composer file should build the backendtest database and set correct password. 

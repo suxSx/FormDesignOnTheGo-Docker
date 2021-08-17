@@ -18,7 +18,7 @@ services:
     restart: unless-stopped
   # Frontend
   formdesign-backend:
-    image: formdesign-backend:latest
+    image: knoph/formdesign-backend:latest
     network_mode: bridge
     container_name: formdesign-backend
     expose:
@@ -32,7 +32,7 @@ services:
       - postgres
   # Backend
   formdesign-frontend:
-    image: formdesign-frontend:latest
+    image: knoph/formdesign-frontend:latest
     network_mode: bridge
     container_name: formdesign-frontend
     expose:

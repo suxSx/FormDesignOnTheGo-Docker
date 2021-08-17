@@ -48,16 +48,23 @@ To build run: ``docker-compose up`` from the folder where docker-compose.yml are
 ## Saving the file 
 
 Use these commands to save them to tar.
+
 ``docker save -o ./formdesign-frontend.tar formdesign-frontend``
-``docker save -o ./formdesign-backend formdesign-backend``
+
+``docker save -o ./formdesign-backend.tar formdesign-backend``
+
 ``docker save -o ./postgres.tar postgres``
 
 Now send it to another machine and use the yml file to run them. Follow up with:
+
 ``docker load -i ./formdesign-frontend.tar``
+
 ``docker load -i ./formdesign-backend.tar``
+
 ``docker load -i ./postgres.tar``
 
 For finally to copy it to the docker image:
+
 ``docker cp formdesign-docker:./ ./``
 
 # TROUBLE WITH STARTUP

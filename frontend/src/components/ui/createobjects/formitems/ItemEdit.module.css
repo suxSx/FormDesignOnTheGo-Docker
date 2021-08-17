@@ -1,0 +1,36 @@
+.card-style {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin: 0.5rem;
+}
+
+.title-container {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    margin: 0.5rem;
+    justify-content: space-around;
+}
+
+.single-button-container {
+    width: 100%;
+    margin-left: 0.25rem;
+    margin-right: 0.25rem;
+}
+
+@media (max-width: 750px) {
+    .button-container {
+        flex-direction: column;
+        display: flex;
+    }
+
+    .single-button-container {
+        margin: 0;
+    }
+}

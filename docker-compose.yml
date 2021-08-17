@@ -1,5 +1,6 @@
 version: "3"
 services:
+  #SQL Server
   postgres:
     image: postgres:latest
     network_mode: bridge
@@ -13,23 +14,35 @@ services:
     environment:
       - POSTGRES_PASSWORD=WR2WPMjrJUoB27
       - POSTGRES_USER=postgres
-      - POSTGRES_DB=testdb
+      - POSTGRES_DB=backendtest
     restart: unless-stopped
-  # APP*****************************************
-  formdesign-spring-boot-docker:
-    image: formdesign-spring-boot-docker:latest
+  # Frontend
+  formdesign-backend:
+    image: formdesign-backend:latest
     network_mode: bridge
-    container_name: formdesign-spring-boot-docker
+    container_name: formdesign-backend
     expose:
       - 8080
-      - 80
     ports:
       - 8080:8080
-      - 80:80
     restart: unless-stopped
     depends_on:
       - postgres
     links:
       - postgres
+  # Backend
+  formdesign-frontend:
+    image: formdesign-frontend:latest
+    network_mode: bridge
+    container_name: formdesign-frontend
+    expose:
+      - 80
+    ports:
+      - 80:80
+    restart: unless-stopped
+    depends_on:
+      - formdesign-backend
+    links:
+      - formdesign-backend
 volumes:
   postgres-data:

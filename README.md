@@ -7,9 +7,13 @@ First build the JAR file for the backend. Use the command ``gradle bootBuildImag
 The jar file will be created in: ``/backend/build/libs/firstspringapp-0.0.1-SNAPSHOT.jar``
 
 ### Build Docker React and Spring Image
-Then we need a docker image contain both front and back end. From the folder contain Docker file run ``docker build -t formdesign-docker .``
+Then we need a docker  for both frontend and backend. 
 
-You can test the image with the command: ``docker run -p 80:80 formdesign-spring-docker``
+Navigate into Frontend folder and run ``docker build -t formdesign-frontend .``
+
+Navigate into Backend folder and run ``docker build -t formdesign-backend .``
+
+You can test the image with the command: ``docker run -p 80:80 formdesign-frontend/backend``
 
 ### Build the postgresql image
 The backend uses postgresql, so we also need an image containing that one.
@@ -18,12 +22,14 @@ Run this to create an image for postgresql: ``docker create -v /var/lib/postgres
 
 Then run: ``docker run -p 5432:5432 --name postgres -e POSTGRES_PASSWORD=WR2WPMjrJUoB27 -d --volumes-from PostgresData postgres``
 
-In order to set up a postgresql database for test purpose, and a docker image.
+In order to set up a postgresql database for test purpose, and a docker image. You can try and connect your formdesign-spring-docker image to the postgresql db in order to check that it is running.
+
+This step is not crucial for the build process, only for your own test purpose. 
 
 ### Check that all images are there 
 Run  ``docker image list -a``
 
-You should then see a list of images. And among them ``formdesign-spring-boot-docker`` and ``postgres``
+You should then see a list of images. And among them ``formdesign-frontend`` ``formdesign-backend`` and ``postgres``
 
 ## Creating the database.
 To verify that the postgressql server runs. Open now pgadmin4 as an example. And connect to postgresql at localhost. The pssword should be ``WR2WPMjrJUoB27``.
@@ -33,15 +39,29 @@ After connected create a new database: ``backendtest`` this is the database spri
 You can now also stop the container with ``docker container stop postgres``
 
 ## Creating docker-compose.yml 
-In order to deplay the project as a full docker. We need to combine all the containers to one file. So when we dock it, it runs the frontend, backend and the postgresql server.
+In order to deploy the project as a full docker. We need to combine all the containers to one file. So when we dock it, it runs the frontend, backend and the postgresql server.
 
 The ``docker-compose.yml`` do this for us. 
 
 To build run: ``docker-compose up`` from the folder where docker-compose.yml are located followed by: ``docker-compose up -build``
 
+## Saving the file 
+
+Use these commands to save them to tar.
+``docker save -o ./formdesign-frontend.tar formdesign-frontend``
+``docker save -o ./formdesign-backend formdesign-backend``
+``docker save -o ./postgres.tar postgres``
+
+Now send it to another machine and use the yml file to run them. Follow up with:
+``docker load -i ./formdesign-frontend.tar``
+``docker load -i ./formdesign-backend.tar``
+``docker load -i ./postgres.tar``
+
+For finally to copy it to the docker image:
+``docker cp formdesign-docker:./ ./``
+
 # TROUBLE WITH STARTUP
-If you had to delte postgres inorder to build the compose file, the ``backendtest`` database was deleted. You need to login in to the postgres database
-and create it before you can run the conatiner. You will not be able to run it, since they wil say backendtest is missing.
+Tripple check that the username, and password are the same in the composer file as it is in your application file for spring. The composer file should build the backendtest database and set correct password. 
 
 
 

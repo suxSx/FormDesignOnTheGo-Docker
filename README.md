@@ -55,7 +55,7 @@ Use these commands to save them to tar.
 
 ``docker save -o ./postgres.tar postgres``
 
-Now send it to another machine and use the yml file to run them. Follow up with:
+You can send them to another machine/user and they can load the images with:
 
 ``docker load -i ./formdesign-frontend.tar``
 
@@ -63,9 +63,7 @@ Now send it to another machine and use the yml file to run them. Follow up with:
 
 ``docker load -i ./postgres.tar``
 
-For finally to copy it to the docker image:
-
-``docker cp formdesign-docker:./ ./``
+To run, use the docker-compose.yml file so remember to send that one to. 
 
 # TROUBLE WITH STARTUP
 Tripple check that the username, and password are the same in the composer file as it is in your application file for spring. The composer file should build the backendtest database and set correct password. 
